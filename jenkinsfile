@@ -13,14 +13,13 @@ pipeline {
             
         } 
         stage('Install Dependencies') { 
-            parallel { stage('Install Requirements') { 
-                steps { sh '. venv/bin/activate && pip install -r requirements.txt || echo "No requirements.txt found, skipping"' } 
-                
-            } 
-            stage('Lint Code') { 
-                steps { sh '. venv/bin/activate && pip install flake8 && flake8 hello.py || echo "Linting skipped or failed"' } 
-                
-            } 
+            parallel { 
+                stage('Install Requirements') {
+                    steps { sh '. venv/bin/activate && pip install -r requirements.txt || echo "No requirements.txt found, skipping"' } 
+                } 
+                stage('Lint Code') { 
+                    steps { sh '. venv/bin/activate && pip install flake8 && flake8 hello.py || echo "Linting skipped or failed"' } 
+                } 
                 
             } 
             
