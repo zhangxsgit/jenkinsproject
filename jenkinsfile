@@ -5,7 +5,7 @@ pipeline {
     } 
     stages { 
         stage('Prepare Environment') { 
-            steps { sh 'python3 -m venv venv' sh '.venv/bin/activate && pip install --upgrade pip' } 
+            steps { sh 'python3 -m venv venv'} 
         
         } 
         stage('Checkout') { 
@@ -39,13 +39,6 @@ pipeline {
         stage('Archive Artifacts') { 
             steps { archiveArtifacts artifacts: 'hello.py, test-results.xml', allowEmptyArchive: true } 
             
-        } 
-        
-    } 
-    post { 
-        success { echo "Build succeeded for ${PROJECT_NAME}!" mail to: 'zhangxs75@gmail.com', subject: "Success: ${PROJECT_NAME} Build #${BUILD_NUMBER}", body: "The pipeline completed successfully. Check details at ${BUILD_URL}" 
-        } 
-        failure { echo "Build failed for ${PROJECT_NAME}!" mail to: 'your.email@example.com', subject: "Failure: ${PROJECT_NAME} Build #${BUILD_NUMBER}", body: "The pipeline failed. Check details at ${BUILD_URL}" 
         } 
         
     } 
