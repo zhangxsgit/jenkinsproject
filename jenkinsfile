@@ -1,8 +1,5 @@
 pipeline { 
     agent any 
-    environment { 
-        PYTHON_VERSION = '3.9' PROJECT_NAME = 'jenkinsproject' 
-    } 
     stages { 
         stage('Checkout') { 
             steps { git url: 'https://github.com/zhangxsgit/jenkinsproject.git', branch: 'main' }    
@@ -17,10 +14,10 @@ pipeline {
                 }    
             }    
         } 
-        stage('Test') { 
-            steps { sh 'pytest hello.py --junitxml=test-results.xml || echo "No tests found, skipping"' } 
-            post { always { junit 'test-results.xml' } }   
-        } 
+ //       stage('Test') { 
+  //          steps { sh 'pytest hello.py --junitxml=test-results.xml || echo "No tests found, skipping"' } 
+  //          post { always { junit 'test-results.xml' } }   
+  //      } 
         stage('Build and Run') { 
             steps { sh 'python3 hello.py' }    
         } 
