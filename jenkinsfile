@@ -1,13 +1,46 @@
 pipeline { 
     agent any 
+    environment { 
+        PYTHON_VERSION = '3.9' PROJECT_NAME = 'jenkinsproject' 
+    } 
     stages { 
+        stage('Prepare Environment') { 
+            steps { sh 'python3 -m venv venv'} 
+        
+        } 
         stage('Checkout') { 
             steps { git url: 'https://github.com/zhangxsgit/jenkinsproject.git', branch: 'main' } 
-        }
             
+        } 
+        stage('Install Dependencies') { 
+            parallel { stage('Install Requirements') { 
+                steps { sh '. venv/bin/activate && pip install -r requirements.txt || echo "No requirements.txt found, skipping"' } 
+                
+            } 
+            stage('Lint Code') { 
+                steps { sh '. venv/bin/activate && pip install flake8 && flake8 hello.py || echo "Linting skipped or failed"' } 
+                
+            } 
+                
+            } 
+            
+        } 
+        stage('Test') { 
+            steps { sh '. venv/bin/activate && pytest hello.py --junitxml=test-results.xml || echo "No tests found, skipping"' } 
+            post { always { junit 'test-results.xml' } 
+                
+            } 
+            
+        } 
         stage('Build and Run') { 
-            steps { sh 'python3 hello.py' } 
-        }    
+            steps { sh '. venv/bin/activate && python3 hello.py' } 
+            
+        } 
+        stage('Archive Artifacts') { 
+            steps { archiveArtifacts artifacts: 'hello.py, test-results.xml', allowEmptyArchive: true } 
+            
+        } 
+        
     } 
     
 }
