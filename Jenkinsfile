@@ -7,10 +7,10 @@ pipeline {
         stage('Install Dependencies') { 
             parallel { 
                 stage('Install Requirements') {
-                    steps { sh 'pip install -r requirements.txt || echo "No requirements.txt found, skipping"' } 
+                    steps { sh 'pip3 install -r requirements.txt || echo "No requirements.txt found, skipping"' } 
                 } 
                 stage('Lint Code') { 
-                    steps { sh 'pip install flake8 && flake8 hello.py || echo "Linting skipped or failed"' } 
+                    steps { sh 'pip3 install flake8 && flake8 hello.py || echo "Linting skipped or failed"' } 
                 }    
             }    
         } 
