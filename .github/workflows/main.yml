@@ -6,7 +6,7 @@ on:
       - main  # 只在 main 分支 push 时运行（可改成 '*' 所有分支）
 
 jobs:
-  run-script:  # Job 名称
+  run-script:  # Job 
     runs-on: ubuntu-latest  # 运行环境：Ubuntu（也可改成 macos-latest，如果你需要 Mac 环境）
 
     steps:
