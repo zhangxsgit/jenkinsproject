@@ -8,7 +8,7 @@ pipeline {
         stage('Checkout') { 
             steps { git url: 'https://github.com/zhangxsgit/jenkinsproject.git', branch: 'main' }    
         } 
-        stage('flaked check') { 
+        stage('syntax check') { 
             steps { sh 'flake8 hello.py || echo "Linting skipped or failed"' }   
         } 
         stage('Build and Run') { 
