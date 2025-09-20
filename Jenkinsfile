@@ -10,7 +10,7 @@ pipeline {
                     steps { sh 'pip3 install -r requirements.txt || echo "No requirements.txt found, skipping"' } 
                 } 
                 stage('Lint Code') { 
-                    steps { sh 'pip3 install flake8 && flake8 hello.py || echo "Linting skipped or failed"' } 
+                    steps { sh 'flake8 hello.py || echo "Linting skipped or failed"' } 
                 }    
             }    
         } 
